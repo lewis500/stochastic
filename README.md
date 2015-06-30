@@ -1,0 +1,2 @@
+# stochastic
+stochastic user equilibrium
