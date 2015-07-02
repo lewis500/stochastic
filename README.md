@@ -1,2 +1,1 @@
-# stochastic
-stochastic user equilibrium
+# routes
