@@ -14,6 +14,7 @@ template = """
 				<path class='arr-line goal' ng-attr-d='{{vm.goal_arrs(vm.minutes)}}' />
 				<path class='exit-line' d3-der='{d: vm.exit_line(vm.minutes)}' />
 				<path class='exit-line goal' ng-attr-d='{{vm.goal_exits(vm.minutes)}}' />
+				<line d3-der='{x1: vm.Hor(vm.S.wish_time), x2: vm.Hor(vm.S.wish_time), y1: vm.Ver(0), y2: 0}' class='wish_time' />
 			</g>
 		</g>
 	</svg>
@@ -25,8 +26,7 @@ class cumCtrl extends PlotCtrl
 		@minutes = Data.minutes
 		@Ver.domain [0, Settings.num_cars] 
 		@Hor.domain [0, Settings.num_minutes]
-
-		@Cars = Data.cars
+		@S = Settings
 
 		@arr_line = d3.svg.line()
 			.y (d)=> @Ver d.cum_arrivals

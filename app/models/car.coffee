@@ -1,5 +1,5 @@
 d3 = require 'd3'
-Settings = require '../services/settings'
+S = require '../services/settings'
 require '../helpers'
 _ = require 'lodash'
 
@@ -9,10 +9,8 @@ class Memory
 		@array = []
 	remember: (c)->
 		@array.push c
-		if @array.length > 5 then @array.shift()
+		if @array.length > S.mem_length then @array.shift()
 	val: ->
-		# d3.sum @array , (d,i)->
-
 		d3.mean @array
 
 class Memories
@@ -54,26 +52,23 @@ class Car
 	exit:(time)-> 
 		@exit_time = time
 		@travel_pen = @exit_time - @actual_time
-		sched_del = @exit_time - Settings.wish_time
-		@sched_pen = Math.max(-Settings.beta * sched_del, Settings.gamma * sched_del)
+		sched_del = @exit_time - S.wish_time
+		@sched_pen = Math.max(-S.beta * sched_del, S.gamma * sched_del)
 		@cost = @travel_pen + @sched_pen
 		@memories.remember @actual_time , @cost
 
 	choose: ->
 		@last_tar = @tar_time
 		@tar_time = @memories.min()
-		if @sampled
-			change = {from: @last_tar, to: @tar_time}
-			@history.push change
-			if @history.length > 100 then @history.shift()
 
-	# guesser: d3.random.normal(0,2)
-	guesser: ->	_.sample [-2..2]
+	guesser: ->
+		# d3.random.normal( 0, S.var)()
+		_.sample [-S.var..S.var]
 
 	arrive: ->
-		e = if Math.random() < .4 then 0 else Math.floor @guesser()
+		e = Math.round @guesser()
 		a = @tar_time + e
-		res = Math.max 1 , Math.min( a, Settings.num_minutes - 1)
+		res = Math.max 1 , Math.min( a, S.num_minutes - 1)
 		@actual_time = res
 		res
 

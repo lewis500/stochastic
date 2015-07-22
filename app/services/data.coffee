@@ -13,17 +13,21 @@ class Data
 			min.set_next k[i+1]
 
 		@cars = [0...Settings.num_cars].map (n)->
-				arr_time = _.sample [10..60]
+				arr_time = _.sample [3..120]
 				newCar = new Car n, arr_time
 
 		@cars.forEach (car,i,k) => 
 			time = car.arrive()
 			@minutes[time].receive_car car
 
-		@sample = _.sample @cars , 200
-		@sample.forEach (d)->
-			d.sampled = true
-			d.history = []
+		@start_times = []
+		i = 0
+
+		@record = ->
+				s = _.find @minutes , (d)=>
+					d.queue.length > Settings.rate
+				@start_times.push s.time
+				if @start_times.length > 10000 then @start_times.shift()
 
 	cars_choose: ->
 		_.sample @cars, Settings.sample_size
@@ -42,6 +46,7 @@ class Data
 		# choice stage
 		@cars_arrive()
 		@cars_choose()
+		@record()
 
 
 module.exports = new Data()

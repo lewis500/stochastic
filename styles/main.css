@@ -10,12 +10,18 @@ line,
 path {
   pointer-events: none;
 }
+line.wish_time {
+  fill: none;
+  stroke: #ff9800;
+  stroke-width: 2px;
+}
 .axis path.domain {
   display: none;
 }
 rect.background {
   fill: #eeeeee;
 }
+.fun,
 path.arr-line,
 path.cost-line,
 path.exit-line,
@@ -32,6 +38,15 @@ path.cost-line {
 }
 path.exit-line {
   stroke: #8bc34a;
+}
+.total_cost {
+  stroke: #03a9f4;
+}
+.travel_cost {
+  stroke: #8bc34a;
+}
+.schedule_delay {
+  stroke: #e91e63;
 }
 line,
 path {
@@ -64,4 +79,7 @@ path.history {
   stroke-width: 2px;
   fill: none;
   opacity: 1;
+}
+.tooltip text {
+  text-align: middle;
 }
