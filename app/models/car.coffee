@@ -49,12 +49,16 @@ class Car
 		@path = []
 		@sampled = false
 
+	toll: (time)->
+		Math.max S.num_cars / S.rate * (S.beta * S.gamma)/(S.beta + S.gamma) - @sched_pen , 0
+
 	exit:(time)-> 
 		@exit_time = time
 		@travel_pen = @exit_time - @actual_time
 		sched_del = @exit_time - S.wish_time
-		@sched_pen = Math.max(-S.beta * sched_del, S.gamma * sched_del)
-		@cost = @travel_pen + @sched_pen
+		@sched_pen = Math.max -S.beta * sched_del, S.gamma * sched_del
+		c = if S.tolling then @toll(time) else 0
+		@cost = @travel_pen + @sched_pen + c
 		@memories.remember @actual_time , @cost
 
 	choose: ->
@@ -62,8 +66,8 @@ class Car
 		@tar_time = @memories.min()
 
 	guesser: ->
-		# d3.random.normal( 0, S.var)()
-		_.sample [-S.var..S.var]
+		d3.random.normal( 0, S.var)()
+		# _.sample [-S.var..S.var]
 
 	arrive: ->
 		e = Math.round @guesser()

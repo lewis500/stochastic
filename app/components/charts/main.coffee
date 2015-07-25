@@ -8,6 +8,7 @@ template = '''
 	<div flex='50'>
 		<md-button ng-click='vm.play()'>Play</md-button>
 		<md-button ng-click='vm.stop()'>Stop</md-button>
+		<md-checkbox ng-model='vm.S.tolling'>Toggle Toll</md-checkbox>
 		<div layout>
 		    <div flex="30" layout layout-align="center center">
 		       <span class="md-body-1">Memory length</span>
@@ -20,6 +21,8 @@ template = '''
 	   	    </div>
 	   	    <md-slider flex ng-model="vm.S.var" min='1' max='5' md-discrete step='.5' />
 	    </div>
+	</div>
+	<div flex='45'>
     	<div layout>
 	    	    <div flex="30" layout layout-align="center center">
 	    	       <span class="md-body-1">Sample Size</span>

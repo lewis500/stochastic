@@ -3,7 +3,7 @@ _ = require 'lodash'
 class PlotCtrl
 	constructor: (@scope) ->
 		@width = 450
-		@height = 275
+		@height = 200
 		@Ver = d3.scale.linear()
 			.domain [0,8]
 			.range [@height, 0]

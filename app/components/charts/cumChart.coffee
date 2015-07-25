@@ -16,9 +16,23 @@ template = """
 				<path class='exit-line goal' ng-attr-d='{{vm.goal_exits(vm.minutes)}}' />
 				<line d3-der='{x1: vm.Hor(vm.S.wish_time), x2: vm.Hor(vm.S.wish_time), y1: vm.Ver(0), y2: 0}' class='wish_time' />
 			</g>
+			<g class='g-lines2'>
+				<path ng-repeat ='p in vm.shad.array track by $index' ng-attr-d='{{p}}' class='arr-line' ng-attr-opacity='{{::.8 - .07 * $index}}'/>
+			</g>
 		</g>
 	</svg>
 """
+
+class Shadows
+	constructor: ->
+		@array = []
+		@counter = 0
+	add: (path)->
+		@counter++
+		if @counter%20 !=0 then return
+		@array.unshift 'M' + path
+		if @array.length > 10 then @array.pop()
+
 
 class cumCtrl extends PlotCtrl
 	constructor: (@scope)->
@@ -28,7 +42,13 @@ class cumCtrl extends PlotCtrl
 		@Hor.domain [0, Settings.num_minutes]
 		@S = Settings
 
+		@shad = new Shadows
+
 		@arr_line = d3.svg.line()
+			.interpolate (points)=>
+				path = points.join 'L'
+				@shad.add path
+				path
 			.y (d)=> @Ver d.cum_arrivals
 			.x (d)=> @Hor d.time 
 

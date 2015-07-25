@@ -11,6 +11,7 @@ class S
 		@sample_size = 200
 		@interval = 25
 		@mem_length = 2
+		@tolling = false
 	@property 't1', get: ->
 		@wish_time - @num_cars / @rate * @gamma / (@beta + @gamma)
 	@property 't2', get: ->
