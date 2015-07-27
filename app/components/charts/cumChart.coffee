@@ -17,7 +17,7 @@ template = """
 				<line d3-der='{x1: vm.Hor(vm.S.wish_time), x2: vm.Hor(vm.S.wish_time), y1: vm.Ver(0), y2: 0}' class='wish_time' />
 			</g>
 			<g class='g-lines2'>
-				<path ng-repeat ='p in vm.shad.array track by $index' ng-attr-d='{{p}}' class='arr-line' ng-attr-opacity='{{::.8 - .07 * $index}}'/>
+				<path ng-repeat ='p in vm.shad.array track by $index' ng-attr-d='{{p}}' class='arr-line' ng-attr-opacity='{{::.5 - .05 * $index}}'/>
 			</g>
 		</g>
 	</svg>

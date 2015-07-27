@@ -10,15 +10,18 @@ blank =
 
 class Minute 
 	constructor: (@time)->
+		@reset()
+		@next = undefined
+		@prev = undefined
+		
+	reset: ->
 		@queue = []
 		@cum_arrivals = 0
 		@cum_exits = 0
 		@arrivals = 0
 		@exits = 0
-		@next = undefined
-		@prev = undefined
 		@targeted = 0
-		@past_targets = []
+		@past_targets = []		
 
 	@property 'variance', get: -> d3.variance @past_arrivals
 	@property 'target_avg', get: -> d3.mean @past_targets

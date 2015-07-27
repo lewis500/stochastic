@@ -8,6 +8,7 @@ template = '''
 	<div flex='50'>
 		<md-button ng-click='vm.play()'>Play</md-button>
 		<md-button ng-click='vm.stop()'>Stop</md-button>
+		<md-button ng-click='vm.reset()'>Reset</md-button>
 		<md-checkbox ng-model='vm.S.tolling'>Toggle Toll</md-checkbox>
 		<div layout>
 		    <div flex="30" layout layout-align="center center">
@@ -63,7 +64,13 @@ class Ctrl
 		d3.timer.flush()
 		@looper()
 
-	stop: -> @paused = true
+	stop: -> 
+		d3.timer.flush()
+		@paused = true
+
+	reset:->
+		# @stop()
+		Data.reset()
 
 der = ->
 	directive =

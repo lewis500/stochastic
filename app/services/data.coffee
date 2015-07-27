@@ -12,22 +12,27 @@ class Data
 			min.set_prev k[i-1]
 			min.set_next k[i+1]
 
-		@cars = [0...Settings.num_cars].map (n)->
-				arr_time = _.sample [3..120]
-				newCar = new Car n, arr_time
-
-		@cars.forEach (car,i,k) => 
-			time = car.arrive()
-			@minutes[time].receive_car car
+		@reset()
 
 		@start_times = []
-		i = 0
 
 		@record = ->
 				s = _.find @minutes , (d)=>
 					d.queue.length > Settings.rate
 				@start_times.push s.time
 				if @start_times.length > 10000 then @start_times.shift()
+
+	reset: ->
+		cands = [10..100]
+		@minutes.forEach (m)->
+			m.reset()
+		@cars = [0...Settings.num_cars].map (n)->
+				tar_time = _.sample cands
+				newCar = new Car n, tar_time
+
+		@cars.forEach (car,i,k) => 
+			time = car.arrive()
+			@minutes[time].receive_car car
 
 	cars_choose: ->
 		_.sample @cars, Settings.sample_size
@@ -37,6 +42,7 @@ class Data
 	cars_arrive: ->
 		@cars.forEach (car) => 
 			time = car.arrive()
+			if time is undefined then debugger
 			@minutes[time].receive_car car
 			@minutes[car.tar_time].targeted++
 

@@ -62,12 +62,11 @@ class Car
 		@memories.remember @actual_time , @cost
 
 	choose: ->
-		@last_tar = @tar_time
 		@tar_time = @memories.min()
 
 	guesser: ->
-		d3.random.normal( 0, S.var)()
-		# _.sample [-S.var..S.var]
+		# d3.random.normal( 0, S.var)()
+		_.sample [-S.var..S.var]
 
 	arrive: ->
 		e = Math.round @guesser()
